@@ -1,0 +1,35 @@
+{
+  "name": "bcrypt.wasm",
+  "version": "0.1.0",
+  "description": "bcrypt in WebAssembly",
+  "author": "Colin J. Ihrig <cjihrig@gmail.com> (http://www.cjihrig.com/)",
+  "main": "lib/index.js",
+  "homepage": "https://github.com/cjihrig/bcrypt.wasm",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cjihrig/bcrypt.wasm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cjihrig/bcrypt.wasm/issues"
+  },
+  "license": "MIT",
+  "scripts": {
+    "compile": "docker run --rm -v $(pwd):/src trzeci/emscripten emcc -O3 -s WASM=1 -s BINARYEN_ASYNC_COMPILATION=0 --bind src/blowfish.cc src/bcrypt.cc src/bcrypt_node.cc -o lib/bcrypt.js",
+    "lint": "belly-button -f -I 'node_modules/**' -I lib/bcrypt.js",
+    "pretest": "npm run lint",
+    "test": "lab -v -a code -t 100 --coverage-exclude lib/bcrypt.js"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "devDependencies": {
+    "belly-button": "4.x.x",
+    "code": "5.x.x",
+    "lab": "15.x.x"
+  },
+  "keywords": [
+    "wasm",
+    "WebAssembly",
+    "bcrypt"
+  ]
+}
